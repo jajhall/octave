@@ -89,6 +89,20 @@ highs (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
   time = 0.0;
   status = -1;    // Initialize status to "bad" value
 
+  // Create the HighsLp instance
+  HighsLp lp;
+
+  // Possible set the sense of optimization to max
+  if (sense != 1) lp.sense_ = ObjSense::kMaximize;
+
+  // Define the column costs and bounds
+  for (int i = 0; i < n; i++) {
+    lp.col_cost_.push_back(c[i]);
+    lp.col_lower_.push_back(lb[i]);
+    lp.col_upper_.push_back(ub[i]);
+  }
+
+  
   Highs highs;
 
   clock_t t_start = clock ();
