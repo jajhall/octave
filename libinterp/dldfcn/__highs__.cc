@@ -89,6 +89,8 @@ highs (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
   time = 0.0;
   status = -1;    // Initialize status to "bad" value
 
+  Highs highs;
+
   clock_t t_start = clock ();
 
   time = (clock () - t_start) / CLOCKS_PER_SEC;
