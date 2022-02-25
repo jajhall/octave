@@ -1,0 +1,23 @@
+c = [0 -2 -1 -3 -2 -4 -3 -5];
+A = [
+-1 -1 0 0 0 0 0 0 ;
+0 0 -1 -1 0 0 0 0;
+ 0 0 0 0 -1 -1 0 0 ;
+ 0 0 0 0 0 0 -1 -1;
+ -1 0 -1 0 -1 0 -1 0 ;
+ 0 -1 0 -1 0 -1 0 -1;
+ 2 0 1 0 0 0 -1 0;
+ 5 0 3 0 -3 0 -1 0;
+ 0 1 0 -1 0 -3 0 -5 ;
+ 0 1 0 0 0 -3 0 -2];
+b = [-1 -1 -1 -1 -2 -2 0 0 0 0];
+lb = [0 0 0 0 0 0 0 0];
+ub = [1 1 1 1 1 1 1 1];
+ctype = ["L" "L" "L" "L" "L" "L" "L" "L" "L" "L" ];
+vartype = ["C" "C" "C" "C" "C" "C" "C" "C"];
+sense = 1
+[xmin, fmin, errnum, extra] = highs(c, A, b, lb, ub, ctype, vartype, sense)
+vartype = ["I" "I" "I" "I" "I" "I" "I" "I"];
+[xmin, fmin, errnum, extra] = highs(c, A, b, lb, ub, ctype, vartype, sense)
+quit
+

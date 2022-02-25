@@ -1,0 +1,1 @@
+LD_LIBRARY_PATH=/home/jajhall/HiGHS/build/lib .build/run-octave < $1
