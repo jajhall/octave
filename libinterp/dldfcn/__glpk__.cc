@@ -31,8 +31,6 @@
 
 #include <limits>
 
-#include <iostream>
-
 #include "Array.h"
 #include "chMatrix.h"
 #include "dColVector.h"
@@ -88,8 +86,6 @@ glpk (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
       double *xmin, double& fmin, int& status,
       double *lambda, double *redcosts, double& time)
 {
-  std::cout << "Running glpk\n";
-
   int typx = 0;
   int errnum = 0;
 
