@@ -49,14 +49,7 @@
 
 #if defined (HAVE_GLPK)
 
-extern "C"
-{
-#if defined (HAVE_GLPK_GLPK_H)
-#  include <glpk/glpk.h>
-#else
-#  include <glpk.h>
-#endif
-}
+#include <Highs.h>
 
 struct control_params
 {
@@ -276,10 +269,10 @@ Undocumented internal function.
       if (VTYPE(i, 0) == 'I')
         {
           isMIP = 1;
-          vartype(i) = GLP_IV;
+          vartype(i) = (int)HighsVarType::kInteger;
         }
       else
-        vartype(i) = GLP_CV;
+        vartype(i) = (int)HighsVarType::kContinuous;
     }
 
   // 8th Input.  Sense of optimization.
