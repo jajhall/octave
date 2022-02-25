@@ -91,6 +91,7 @@ highs (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
 
   // Create the HighsLp instance
   HighsLp lp;
+  const double inf = kHighsInf;
 
   // Possible set the sense of optimization to max
   if (sense != 1) lp.sense_ = ObjSense::kMaximize;
@@ -101,9 +102,41 @@ highs (int sense, int n, int m, double *c, int nz, int *rn, int *cn,
     lp.col_lower_.push_back(lb[i]);
     lp.col_upper_.push_back(ub[i]);
   }
+  // Define the row bounds
+  for (int i = 0; i < m; i++) {
+    double lower = -inf;
+    double upper = inf;
+    switch (ctype[i])
+      {
+      case 'F':
+        break;
+        
+      case 'U':
+        upper = b[i];
+        break;
+        
+      case 'L':
+        lower = b[i];
+        break;
+        
+      case 'S':
+        upper = b[i];
+        lower = b[i];
+        break;
+        
+      case 'D':
+        upper = b[i];
+        lower = b[i];
+        assert("Row is boxed" == "");
+        break;
+      }
+    lp.row_lower_.push_back(lower);
+    lp.row_upper_.push_back(upper);
+  }
 
-  
+  // Create the HighsLp instance
   Highs highs;
+  
 
   clock_t t_start = clock ();
 
@@ -146,9 +179,9 @@ OCTAVE_NAMESPACE_BEGIN
     }                                                                   \
   while (0)
 
-DEFUN_DLD (__glpk__, args, ,
+DEFUN_DLD (__highs__, args, ,
            doc: /* -*- texinfo -*-
-@deftypefn {} {[@var{values}] =} __glpk__ (@var{args})
+@deftypefn {} {[@var{values}] =} __highs__ (@var{args})
 Undocumented internal function.
 @end deftypefn */)
 {
